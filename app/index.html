@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pulse Ether Secure</title>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+  <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="./ecomm.js"></script>
+  <script>
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : '441685086299325',
+        xfbml      : true,
+        version    : 'v3.0'
+      });
+    };
+    (function(d, s, id){
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) {return;}
+      js = d.createElement(s); js.id = id;
+      js.src = "https://connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+    function checkLoginState() {
+      FB.getLoginStatus(function(response) {
+        if (response.status === 'connected') {
+          $.ajax({
+            url: "http://localhost:3000/fb",
+            type: 'get',
+            contentType: "application/json; charset=utf-8"
+          }).done(function(data) {
+            console.log("you got it");
+          });
+        }
+      });
+    }
+  </script>
+</head>
+<body>
+  <div class="row">
+    <div class="container-fluid navbar navbar-light main">
+      <a href="/" class="navbar-brand">Pulse Store</a>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a href="list-item.html" class="nav-link btn list ">Sell Something</a></li>
+          <li>
+            <fb:login-button
+              autologoutlink="true" 
+              scope="public_profile,email"
+              onlogin="checkLoginState();">
+            </fb:login-button>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="container-fluid">
+      <div class="col-sm-2 side-bar">
+        <h4>Categories</h4>
+        <div id="categories">
+        </div>
+      </div>
+      <div class="col-sm-9">
+        <div class="row">
+          <h2 class="text-center">Products To Buy</h2>
+          <div class="row" id="product-list">
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <h2 class="text-center">Products Purchased </h2>
+          <div class="row" id="product-purchased">
+          </div>
+        </div>
+        <hr>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
+
